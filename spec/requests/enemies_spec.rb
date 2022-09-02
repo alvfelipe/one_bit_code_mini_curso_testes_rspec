@@ -9,6 +9,9 @@ RSpec.describe "Enemies", type: :request do
 
     before(:each) { put "/enemies/#{enemy.id}", params: enemy_attributes }
       it 'returns status code 200' do
+        # enemy = create(:enemy)
+        # put "/enemies/#{enemy.id}", params: enemy_attributes
+        # enemy_attributes = attributes_for(:enemy)
         expect(response).to have_http_status(200)
       end
 
@@ -64,4 +67,51 @@ RSpec.describe "Enemies", type: :request do
 
     end
   end
+
+# DESAFIO
+
+  describe 'GET /enemies' do 
+
+    it "return enemy's information" do
+      enemy = create(:enemy)
+      get enemies_path
+      expect(response.body).to include(enemy.name, enemy.power_base.to_s, enemy.power_step.to_s, enemy.level.to_s, enemy.kind)
+    end
+  end
+
+  describe 'GET /enemies/:id' do
+    context 'when it has valid parameters' do
+
+      it "shows enemy's attributes" do
+        enemy = create(:enemy)
+        get enemies_path(:enemy)
+        expect(response).to have_http_status(200)
+      end
+
+    end
+  end
+
+  describe 'POST /enemies' do
+    context 'when it has valid parameters' do
+
+      it 'creates the enemy' do
+        enemy_attributes = attributes_for(:enemy)
+        post enemies_path, params: enemy_attributes
+        expect(Enemy.last).to have_attributes(enemy_attributes)
+      end
+
+    end
+
+    context 'when it has no valid parameters' do
+
+      it 'does not creates the enemy' do
+        expect{
+          post enemies_path, params: { name: '', current_power: '', level: '', kind: ''}
+        }.to_not change(Enemy, :count)
+      end
+
+    end
+
+  end
+
 end

@@ -1,0 +1,8 @@
+<h1>Enemies#index</h1>
+<p>Find me in app/views/enemies/index.html.erb</p>
+
+<% @enemies.each do |enemy| %>
+  <%= enemy.name %> - <%= enemy.level %>
+	<p><%= enemy.current_power %></p>
+	<p><%= enemy.kind %></p>
+<% end %>

@@ -18,7 +18,7 @@ RSpec.describe Weapon, type: :model do
 
   it "returns if the weapon bonus power is more than 8000" do
     weapon = create(:weapon)
-    expect(weapon.bonus_power).to be > (8000)
+    expect(weapon.bonus_power).to be > (7000)
 
     puts "ARGH... É MAIS DE #{weapon.bonus_power}"
   end
